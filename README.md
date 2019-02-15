@@ -1,4 +1,3 @@
 # leetcode-solutions
-Solutions to Leetcode problems, done by me
+Solutions to [Leetcode](https://leetcode.com/problemset/all/) problems, done by me
 
-[LeetCode](https://leetcode.com/problemset/all/)
