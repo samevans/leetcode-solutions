@@ -18,7 +18,7 @@ class Solution(object):
         root = TreeNode(nums.pop(mid))
         while nums:
             mid = len(nums)/2
-            self.insert(root, nums[mid])
+            self.insert(root, nums.pop(mid))
         return root
         
     def insert(self, node, val):
