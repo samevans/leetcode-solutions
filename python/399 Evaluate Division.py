@@ -12,10 +12,9 @@ class Solution(object):
         def build_graph(list_equations):
             
             def add_vertex(o,d,value):
-                if o in graph:
-                    graph[o].append((d,value))
-                else:
-                    graph[o] = [(d,value)]
+                vertices = graph.get(o,[])
+                vertices.append((d,value))
+                graph[o] = vertices
             
             for e,v in list_equations:
                 origin, destination = e
@@ -25,8 +24,7 @@ class Solution(object):
         
         
         def find_path(query):
-            origin = query[0]
-            destination = query[1]
+            origin, destination = query
             
             if origin not in graph or destination not in graph:
                 return -1.0
