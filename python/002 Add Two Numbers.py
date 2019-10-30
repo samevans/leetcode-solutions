@@ -11,29 +11,34 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
+        current1 = l1
+        current2 = l2
+        stored = 0
         
-        result = str(self.concatReverseLinkedList(l1) + self.concatReverseLinkedList(l2))[::-1]
+        current1.val += current2.val
         
-        node = ListNode(int(result[0]))
-        
-        for i in result[1:]:
-            self.insertNode(node, i)
-        return node
-    
-        
-    def insertNode(self, node, val):
-        current = node
-        while current.next is not None:
-            current = current.next
-        current.next = ListNode(val)
-        
-    def concatReverseLinkedList(self, linkedList):
-        
-        result = []
-        result.append(linkedList.val)
-        
-        while linkedList.next is not None:
-            linkedList = linkedList.next
-            result.append(linkedList.val)
+        if current1.val > 9:
+            stored = 1
+            current1.val = current1.val%10
             
-        return int("".join(map(str,result[::-1])))
+        while current1.next or current2.next:
+            if not current1.next:
+                current1.next= ListNode(0)
+            if not current2.next:
+                current2.next= ListNode(0) 
+                
+            current1 = current1.next
+            current2 = current2.next
+            
+            current1.val += current2.val
+            current1.val += stored
+            stored = 0
+        
+            if current1.val > 9:
+                stored = 1
+                current1.val = current1.val%10
+        
+        if stored:
+            current1.next = ListNode(stored)
+            
+        return l1

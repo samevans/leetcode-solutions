@@ -10,23 +10,13 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        
-        if not head:
-            return []
-        
-        linkedlist = [head.val]
         current = head
+        prev = None
         
-        while current.next is not None:
-            current = current.next
-            linkedlist.append(current.val)
-            
-        linkedlist = linkedlist[::-1] 
-        new_head = ListNode(linkedlist[0])
-        current = new_head
-        for item in linkedlist[1:]:
-            current.next = ListNode(item)
-            current = current.next
-            
-        return new_head
+        while current:
+            _next = current.next
+            current.next = prev
+            prev = current
+            current = _next
         
+        return prev
