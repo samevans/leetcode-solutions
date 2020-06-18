@@ -6,7 +6,6 @@ var solveSudoku = function(board) {
     solver(board);
 };
 
-
 var solver = function(board) {
     for(var i=0;i<9;i++){
         for(var j=0;j<9;j++){
