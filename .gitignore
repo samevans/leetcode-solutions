@@ -1,1 +1,15 @@
 /*.code-workspace
+
+### IntelliJ IDEA ###
+.idea
+.idea/*
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+
+.DS_Store
+
