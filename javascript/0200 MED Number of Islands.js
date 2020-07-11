@@ -10,7 +10,7 @@ var numIslands = function(grid) {
 
         for(var col=0;col<grid[0].length;col++){
             if(grid[row][col]==='1' && !visited[row+'-'+col]){
-                dfs(visited, grid, Object.freeze([row,col]));
+                dfs(visited, grid, [row,col]);
                 answer++;
             }
         }
@@ -21,27 +21,37 @@ var numIslands = function(grid) {
 
 var dfs = function(visited, grid, curr){
 
-    let stack=[curr];
+    let row = curr[0], col = curr[1];
+    visited[row+'-'+col] = 1;
 
-    while(stack.length>0){
-        let curr = stack.pop();
-        let row = curr[0], col = curr[1];
-
-        if(visited[row+'-'+col]) continue;
-
-        visited[row+'-'+col] = 1;
-
-        if(row>0 && grid[row-1][col]==='1' && !visited[(row-1)+'-'+col]){
-            stack.push(Object.freeze([row-1,col]));
-        }
-        if(col>0 && grid[row][col-1]==='1' && !visited[row+'-'+(col-1)]){
-            stack.push(Object.freeze([row,col-1]));
-        }
-        if(row<grid.length-1 && grid[row+1][col]==='1' && !visited[(row+1)+'-'+col]){
-            stack.push(Object.freeze([row+1,col]));
-        }
-        if(col<grid[0].length-1 && grid[row][col+1]==='1' && !visited[row+'-'+(col+1)]){
-            stack.push(Object.freeze([row,col+1]));
+    let cells = [[row-1,col],[row,col-1],[row+1,col],[row,col+1]];
+    for(let cell of cells){
+        if(isValid(grid,visited,cell)){
+            dfs(visited, grid, cell);
         }
     }
+}
+
+var isValid = function(grid, visited, cell){
+    let row=cell[0], col=cell[1];
+    if(row<0){
+        return false;
+    }
+    else if(col<0){
+        return false;
+    }
+    else if(row>grid.length-1){
+        return false;
+    }
+    else if(col>grid[0].length-1){
+        return false;
+    }
+    else if(grid[row][col]==='0'){
+        return false;
+    }
+    else if(visited[row+'-'+col]){
+        return false;
+    }
+
+    return true;
 }
