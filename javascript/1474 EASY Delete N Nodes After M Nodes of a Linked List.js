@@ -19,7 +19,6 @@ var deleteNodes = function(head, m, n) {
     while(!!curr){
         if(countM===m){
             if(countN<n){
-                console.log(curr.val)
                 if(!!curr.next){
                     curr.val = curr.next.val;
                     curr.next = curr.next.next;
