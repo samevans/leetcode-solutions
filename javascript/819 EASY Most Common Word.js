@@ -13,9 +13,7 @@ var mostCommonWord = function(paragraph, banned) {
     let words = paragraph.toLowerCase().replace(/[^a-z0-9]/gmi, " ").replace(/\s+/g, " ").split(" ");
     for(let word of words){
         if(!bannedDict[word]){
-            if(!count[word]){
-                count[word] = 0;
-            }
+            if(!count[word]) count[word] = 0;
             count[word]++;
         }
     }
