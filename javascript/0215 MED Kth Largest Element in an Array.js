@@ -8,11 +8,13 @@ var findKthLargest = function(nums, k) {
     for(const num of nums){
         heap.insert(num);
     }
-    let result = undefined
-    for(let i=0;i<k;i++){
-        result = heap.extractMax();
+    for(let i=0;i<k-1;i++){
+        heap.extractMax();
     }
-    return result;
+
+    return heap.heap[0];
+
+    // return nums.sort((a,b)=>b-a)[k-1];
 };
 
 class MaxHeap{
