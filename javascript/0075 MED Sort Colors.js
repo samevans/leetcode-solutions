@@ -22,3 +22,17 @@ var sortColors = function(nums) {
         }
     }
 };
+
+// In place using constant space
+var sortColors = function(nums) {
+    let i = 1;
+
+    while(i<nums.length){
+        let j = i;
+        while(j>=0 && nums[j]<nums[j-1]){
+            [nums[j],nums[j-1]] = [nums[j-1],nums[j]];
+            j--;
+        }
+        i++;
+    }
+};
