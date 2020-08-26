@@ -3,26 +3,27 @@
  * @return {string}
  */
 var frequencySort = function(s) {
-    let max = 0;
-
     let count = {}
+    // O(n)
     for(const c of s){
         if(!count[c]) count[c]=0;
         count[c]++;
     }
 
     let heap = new MaxHeap();
+
+    // O(nlogn)
     for(const key of Object.keys(count)){
         heap.insert(new HeapObject(key, count[key]));
     }
 
     let output="";
+    // O(nlogn)
     while(heap.size()){
         const obj = heap.extractMax();
-        let i = obj.count;
-        while(i>0){
+        while(obj.count>0){
             output+=obj.character;
-            i--;
+            obj.count--;
         }
     }
     return output;
