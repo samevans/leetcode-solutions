@@ -1,5 +1,4 @@
 /**
-
  * Definition for isBadVersion()
  * 
  * @param {integer} version number
