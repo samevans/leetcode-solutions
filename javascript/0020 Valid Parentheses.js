@@ -3,7 +3,7 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    let parenDict = {
+    let matching = {
         "}":"{",
         ")":"(",
         "]":"["
@@ -11,13 +11,17 @@ var isValid = function(s) {
 
     let stack = [];
 
-    for(var i=0;i<s.length;i++){
-        if(!(parenDict[s[i]])) {
-            stack.push(s[i]);
+    for(var i=0; i<s.length; i++){
+        let paren = s[i]
+        
+        if(!(matching[paren])) {
+            stack.push(paren);
         }
-        else if(parenDict[s[i]] !== stack.pop()) {
+        else if(matching[paren] !== stack.pop()) {
             return false;
         }
     }
+    
     return stack.length === 0;
+    
 };
