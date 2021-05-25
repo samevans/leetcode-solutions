@@ -7,16 +7,9 @@ var findWords = function(words) {
     let secondRow = new Set();
     let thirdRow = new Set();
     
-    for(character of "qwertyuiop"){
-        firstRow.add(character);
-    }
-    for(character of "asdfghjkl"){
-        secondRow.add(character);
-    }
-    for(character of "zxcvbnm"){
-        thirdRow.add(character);
-    }
-    
+    addToSet(firstRow, "qwertyuiop");
+    addToSet(secondRow, "asdfghjkl");
+    addToSet(thirdRow, "zxcvbnm");
     
     let output = []
     for(word of words){
@@ -29,13 +22,18 @@ var findWords = function(words) {
             output.push(word)
         }
     }
-    
     return output;
 };
 
+var addToSet = function(rowSet, row){
+    for(character of row){
+        rowSet.add(character);
+    }
+}
+
 var isRow = function(rowSet, word){
-    for(let i=0; i<word.length; i++){
-        if(!rowSet.has(word[i])){
+    for(character of word){
+        if(!rowSet.has(character)){
             return false
         }
     }
