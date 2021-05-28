@@ -8,17 +8,16 @@
 var floodFill = function(image, sr, sc, newColor) {
     const color = image[sr][sc];
 
-    const visited = {};
+    const visited = new Set();
     const stack = [[sr, sc]];
     while(stack.length){
-        let curr = stack.pop();
-        let row = curr[0], col=curr[1];
+        let [row,col] = stack.pop();
 
         if(!isValid(image, visited, color, row, col)) {
             continue;
         }
 
-        visited[row+"_"+col] = 1;
+        visited.add(row+"_"+col);
 
         if(image[row][col]===color){
             image[row][col] = newColor;
@@ -33,7 +32,7 @@ var floodFill = function(image, sr, sc, newColor) {
 };
 
 var isValid = function(image, visited, color, row, col){
-    if(visited[row+"_"+col]){
+    if(visited.has(row+"_"+col)){
         return false;
     }
     else if(row<0){
