@@ -10,72 +10,75 @@
  * @return {ListNode}
  */
 var mergeKLists = function(lists) {
-    const heap = new MinHeap();
-    for(const head of lists){
-        let curr = head;
-        while(!!curr){
-            heap.insert(curr.val);
-            curr = curr.next;
+    let minHeap = new MinHeap()
+    for(list of lists){
+        let curr = list
+        while(curr){
+            minHeap.insert(curr.val)
+            curr = curr.next
         }
     }
-    const head = new ListNode(null,null);
-    let curr = head;
-    while(heap.heap.length){
-        curr.next = new ListNode(heap.extractMin(),null)
-        curr=curr.next;
+    
+    let dummy = new ListNode(undefined, undefined)
+    let curr = dummy
+    while(minHeap.size()){
+        curr.next = new ListNode(minHeap.extractMin(), undefined)
+        curr = curr.next
     }
-    return !!head.next ? head.next : null;
+    return dummy.next
 };
 
 class MinHeap{
     constructor(){
-        this.heap=[];
+        this.heap = []
     }
-
-    insert(elem){
-        this.heap.push(elem);
-        this.bubbleUp();
+    size(){
+        return this.heap.length
     }
-
+    insert(val){
+        this.heap.push(val)
+        this.bubbleUp()
+    }
     bubbleUp(){
-        let index = this.heap.length-1;
+        let index = this.heap.length-1
         while(index>0){
-            let element = this.heap[index];
-            let parentIndex = Math.floor((index-1)/2);
-            let parent = this.heap[parentIndex];
-            if(parent<element) break;
-            this.heap[index] = parent;
-            this.heap[parentIndex] = element;
-            index=parentIndex;
+            let elem = this.heap[index]
+            let parentIndex = Math.floor((index-1)/2)
+            let parent = this.heap[parentIndex]
+            if(parent<elem) break
+            this.heap[index] = parent
+            this.heap[parentIndex] = elem
+            index = parentIndex
         }
     }
-
     extractMin(){
-        let min = this.heap[0];
-        if(this.heap.length>1){
-            this.heap[0] = this.heap.pop();
-            this.sinkDown(0);
-        }else{
-            this.heap.pop();
+        let min
+        if(this.heap.length){
+            min = this.heap[0]
+            if(this.heap.length>1){
+                this.heap[0] = this.heap.pop()
+                this.sinkDown(0)
+            }else{
+                this.heap.pop()
+            }
         }
-        return min;
+        return min
     }
-
-    sinkDown(index){
-        let left = 2*index+1;
-        let right = 2*index+2;
-        let largest = index;
-        let length = this.heap.length;
-
-        if(right<=length && this.heap[right]<this.heap[largest]){
-            largest=right;
+    sinkDown(i){
+        let smallest=i
+        let left = 2*i+1
+        let right = 2*i+2
+        let length = this.heap.length
+        if(left<length && this.heap[left] < this.heap[smallest]){
+            smallest = left
         }
-        if(left<=length && this.heap[left]<this.heap[largest]){
-            largest=left;
+        if(right<length && this.heap[right] < this.heap[smallest]){
+            smallest = right
         }
-        if(largest!==index){
-            [this.heap[largest],this.heap[index]]=[this.heap[index],this.heap[largest]];
-            this.sinkDown(largest);
+        if(smallest!==i){
+            [this.heap[i],this.heap[smallest]]=[this.heap[smallest],this.heap[i]]
+            this.sinkDown(smallest)
         }
     }
+    
 }
