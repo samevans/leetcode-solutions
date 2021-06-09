@@ -2,85 +2,90 @@
  * @param {number} k
  * @param {number[]} nums
  */
-var KthLargest = function(k, nums) {
-    this.heap = new MaxHeap();
-    this.k=k;
-    for(const num of nums){
-        this.heap.insert(num);
+class KthLargest {
+    constructor(k, nums){
+        this.heap = new MinHeap(k);
+        
+        for(let num of nums){
+            this.heap.insert(num)
+        }
     }
 };
 
-/**
+/** 
  * @param {number} val
  * @return {number}
  */
 KthLargest.prototype.add = function(val) {
-    this.heap.insert(val);
-
-    const output=[];
-    for(let i=0;i<this.k;i++){
-        output.push(this.heap.extractMax());
-    }
-
-    for(const item of output){
-        this.heap.insert(item);
-    }
-
-    return output[this.k-1];
-
+    this.heap.insert(val)
+    return this.heap.heap[0]
 };
 
-/**
+/** 
  * Your KthLargest object will be instantiated and called as such:
  * var obj = new KthLargest(k, nums)
  * var param_1 = obj.add(val)
  */
 
-
-class MaxHeap{
-    constructor(){
-        this.heap=[];
+class MinHeap{
+    constructor(k){
+        this.heap = []
+        this.k=k
     }
-    insert(elem){
-        this.heap.push(elem);
-        this.bubbleUp();
+    size(){
+        return this.heap.length
+    }
+    insert(val){
+        if(this.size()<this.k){
+            this.heap.push(val)
+            this.bubbleUp()
+        }
+        else if(this.heap[0]<val){
+            this.extractMin()
+            this.heap.push(val)
+            this.bubbleUp()
+        }
     }
     bubbleUp(){
-        let index=this.heap.length-1;
+        let index = this.heap.length-1
         while(index>0){
-            let element=this.heap[index];
-            let parentIndex=Math.floor((index-1)/2);
-            let parent=this.heap[parentIndex];
-            if(parent>element) break;
-            this.heap[index]=parent;
-            this.heap[parentIndex]=element;
-            index=parentIndex;
+            let elem = this.heap[index]
+            let parentIndex = Math.floor((index-1)/2)
+            let parent = this.heap[parentIndex]
+            if(parent<elem) break
+            this.heap[index] = parent
+            this.heap[parentIndex] = elem
+            index = parentIndex
         }
     }
-    extractMax(){
-        let max = this.heap[0];
-        if(this.heap.length>1){
-            this.heap[0]=this.heap.pop();
-            this.sinkDown(0);
-        }else{
-            this.heap.pop();
+    extractMin(){
+        let min
+        if(this.heap.length){
+            min = this.heap[0]
+            if(this.heap.length>1){
+                this.heap[0] = this.heap.pop()
+                this.sinkDown(0)
+            }else{
+                this.heap.pop()
+            }
         }
-        return max;
+        return min
     }
-    sinkDown(index){
-        let left=2*index+1;
-        let right=2*index+2;
-        let largest=index;
-        let length=this.heap.length;
-        if(left<=length && this.heap[left]>this.heap[largest]){
-            largest=left;
+    sinkDown(i){
+        let smallest=i
+        let left = 2*i+1
+        let right = 2*i+2
+        let length = this.heap.length
+        if(left<length && this.heap[left] < this.heap[smallest]){
+            smallest = left
         }
-        if(right<=length && this.heap[right]>this.heap[largest]){
-            largest=right;
+        if(right<length && this.heap[right] < this.heap[smallest]){
+            smallest = right
         }
-        if(largest!==index){
-            [this.heap[index],this.heap[largest]]=[this.heap[largest],this.heap[index]]
-            this.sinkDown(largest);
+        if(smallest!==i){
+            [this.heap[i],this.heap[smallest]]=[this.heap[smallest],this.heap[i]]
+            this.sinkDown(smallest)
         }
     }
+    
 }
