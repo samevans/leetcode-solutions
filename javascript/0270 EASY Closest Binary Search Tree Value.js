@@ -12,20 +12,19 @@
  * @return {number}
  */
 var closestValue = function(root, target) {
-    let answer = [null,Infinity]; // best value, how close
-    if(!!root){
-        const queue = [root];
+    let result = Infinity
+    
+    if(root){
+        let queue = [root]
         while(queue.length){
-            let curr = queue.shift();
-
-            let howClose = Math.abs(curr.val-target);
-            if(howClose<answer[1]){
-                answer = [curr.val,howClose]
-            }
-
-            if(curr.left) queue.push(curr.left);
-            if(curr.right) queue.push(curr.right);
+            let curr = queue.shift()
+            
+            result = Math.abs(curr.val-target) < Math.abs(result-target) ? curr.val : result
+            
+            if(curr.left) queue.push(curr.left)
+            if(curr.right) queue.push(curr.right)
         }
     }
-    return answer[0];
+    
+    return result
 };
