@@ -4,16 +4,9 @@
  */
 var reverseVowels = function(s) {
     let vowels = new Set();
-    vowels.add("A");
-    vowels.add("a");
-    vowels.add("E");
-    vowels.add("e");
-    vowels.add("I");
-    vowels.add("i");
-    vowels.add("O");
-    vowels.add("o");
-    vowels.add("U");
-    vowels.add("u");
+    for(let vowel of "aeiouAEIOU"){
+        vowels.add(vowel);
+    }
     
     let left = 0;
     let right = s.length-1;
