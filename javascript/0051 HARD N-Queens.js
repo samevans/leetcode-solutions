@@ -1,45 +1,74 @@
 /**
-https://leetcode.com/problems/n-queens/
-
  * @param {number} n
  * @return {string[][]}
  */
 var solveNQueens = function(n) {
-    const answer = []
-    solve(answer, n)
-
-    for(var i=0;i<answer.length;i++){
-        for(var j=0;j<n;j++){
-            let arr = Array(n);
-            arr[answer[i][j]] = 'Q';
-            answer[i][j] = arr.join('.');
+    let result = []
+    
+    let grid = []
+    
+    for(let row = 0; row < n; row++){
+        let s = ""
+        for(let col = 0; col < n; col++){
+            s+="."
         }
+        grid.push(s)
     }
-
-    return answer;
+    
+    calculateQueens(result, n, grid)
+    
+    return result
 };
 
-var solve = function(answer, n, row = 0, colsPlaced = []){
-    if(row===n){
-        answer.push([...colsPlaced]);
-    }else{
-        for(var col=0;col<n;col++){
-            colsPlaced.push(col);
-            if(isValid(colsPlaced)) {
-                solve(answer, n, row+1, colsPlaced);
+var calculateQueens = function(result, n, grid, queens = 0, row = 0, col = 0) {
+    if(queens === n){
+        result.push(grid)
+        return
+    }
+    
+    for(let i=row; i<n; i++){
+        for(let j=col; j<n; j++){
+            if(validQueen(grid, i, j)){
+                let tempGrid = [...grid]
+                let newRow = tempGrid[i].split("")
+                newRow[j] = "Q"
+                tempGrid[i] = newRow.join("")
+                calculateQueens(result, n, tempGrid, queens+1, i+1)
             }
-            colsPlaced.pop()
         }
     }
 }
 
-var isValid = function(colsPlaced) {
-    let added = colsPlaced.length - 1;
-    for(var i=0;i<added;i++){
-        var diff = Math.abs(colsPlaced[i]-colsPlaced[added]);
-        if(diff===0||diff===added-i){
-            return false;
+var validQueen = function(grid, row, col){
+    
+    // vertically no other queens
+    for(let i=0; i<row; i++){
+        
+        if(grid[i][col] === "Q"){
+            return false
         }
     }
-    return true;
+    
+    // horizontally no other queens
+    for(let i=0; i<col; i++){
+        if(grid[row][i] === "Q"){
+            return false
+        }
+    }
+    
+    // upper left diagonally no other queens
+    for(let i=1; row-i>=0 && col-i>=0; i++){
+        if(grid[row-i][col-i] === "Q") {
+            return false
+        }
+    }
+    
+    // upper right diagonally no other queens
+    for(let i=1; row-i>=0 && col+i<grid[0].length; i++){
+        if(grid[row-i][col+i] === "Q") {
+            return false
+        }
+    }
+    
+    return true
 }
