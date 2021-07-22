@@ -8,17 +8,17 @@
  */
 /**
  * @param {TreeNode} root
- * @return {number[]}
+ * @return {number}
  */
-var rightSideView = function(root) {
-    let result = []
+var goodNodes = function(root) {
+    let result = 0
     if(root){
-        let queue = [[root,0]]
+        let queue = [[root,-Infinity]]
         while(queue.length){
-            let [curr,depth] = queue.shift()
-            result[depth] = curr.val
-            if(curr.left) queue.push([curr.left, depth+1])
-            if(curr.right) queue.push([curr.right, depth+1])
+            let [curr,max] = queue.shift()
+            if(curr.val>=max) result++
+            if(curr.left) queue.push([curr.left, Math.max(max,curr.val)])
+            if(curr.right) queue.push([curr.right, Math.max(max,curr.val)])
         }
     }
     return result
