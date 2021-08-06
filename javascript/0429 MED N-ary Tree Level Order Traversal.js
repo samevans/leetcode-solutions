@@ -7,24 +7,23 @@
  */
 
 /**
- * @param {Node} root
+ * @param {Node|null} root
  * @return {number[][]}
  */
 var levelOrder = function(root) {
-    const answer = [];
-    if(!!root){
-        const queue = [[root,0]];
+    let result = []
+    if(root){
+        let queue = [[root,1]]
         while(queue.length){
-            let curr=queue.shift();
-            let node=curr[0], depth=curr[1];
-
-            if(!answer[depth]) answer[depth] = [node.val];
-            else answer[depth].push(node.val);
-
-            for(child of node.children){
-                queue.push([child,depth+1]);
+            let [curr,depth] = queue.shift()
+            if(result.length<depth){
+                result.push([])
+            }
+            result[depth-1].push(curr.val)
+            for(let child of curr.children){
+                queue.push([child,depth+1])
             }
         }
     }
-    return answer;
+    return result
 };
