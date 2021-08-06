@@ -11,7 +11,7 @@ var merge = function(intervals) {
         let prev=intervals[0];
         answer.push(prev);
 
-        for(let i=0;i<intervals.length;i++){
+        for(let i=1;i<intervals.length;i++){
             let curr = intervals[i];
             if(curr[0]<=prev[1]){
                 prev[1] = Math.max(prev[1],curr[1])
