@@ -3,24 +3,27 @@
  * @return {boolean}
  */
 var validPalindrome = function(s) {
-
-    let left = 0, right = s.length-1;
-
+    let left = 0
+    let right = s.length-1
     while(left<right){
         if(s[left]!==s[right]){
-            return isValidPalindrome(s,left+1,right) || isValidPalindrome(s,left,right-1);
+            return secondValidPalindrome(s,left+1,right) || secondValidPalindrome(s,left,right-1)
         }
-        left++;
-        right--;
+        left++
+        right--
     }
-    return true;
+    
+    return true
 };
 
-var isValidPalindrome = function(s,left,right){
+var secondValidPalindrome = function(s,left,right){
     while(left<right){
-        if(s[left]!==s[right]) return false;
-        left++;
-        right--;
+        if(s[left]!==s[right]){
+            return false
+        }
+        left++
+        right--
     }
-    return true;
+    return true
 }
+
