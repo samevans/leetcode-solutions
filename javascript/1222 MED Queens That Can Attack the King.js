@@ -11,19 +11,23 @@ var queensAttacktheKing = function(queens, king) {
         queenSet.add(x+"-"+y)
     }
     
-    var traverse = function(x, y, directionX, directionY) {
-        if(x<0 || y<0 || x>=8 || y>=8) return
-        if(queenSet.has(x+"-"+y)){
-            result.push([x,y])
-            return
-        }
-        traverse(x+directionX, y+directionY, directionX, directionY)
-    }
-    
-    for(let i of [-1,0,1]){
-        for(let j of [-1,0,1]){
-            if(i==0 && j==0) continue
-            traverse(king[0], king[1], i, j)
+    let directions = [-1,0,1]
+    for(let dx of directions) {
+        for(let dy of directions) {
+            if(dx === 0 && dy === 0){
+                continue
+            }
+            
+            let x = king[0]
+            let y = king[1]
+            while(x+dx>=0 && y+dy>=0 && x+dx<8 && y+dy<8){
+                x += dx
+                y += dy
+                if(queenSet.has(x+"-"+y)){
+                    result.push([x,y])
+                    break
+                }
+            }
         }
     }
     
